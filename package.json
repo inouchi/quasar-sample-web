@@ -2,7 +2,7 @@
   "name": "quasar-sample-web",
   "version": "0.0.1",
   "description": "A Quasar Project",
-  "productName": "quasar-sample-web",
+  "productName": "Quasar Sample Web",
   "author": "inouchi <inouchi0603@gmail.com>",
   "private": true,
   "scripts": {
