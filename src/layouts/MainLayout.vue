@@ -1,105 +1,95 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+  <q-layout view="hHh Lpr lff">
+    <q-header>
       <q-toolbar>
         <q-btn
           flat
-          dense
+          @click="leftDrawerOpen = !leftDrawerOpen"
           round
+          dense
           icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
         />
-
-        <q-toolbar-title> Quasar App </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+        <img
+          alt="Quasar Logo"
+          src="https://cdn.quasar.dev/logo-v2/svg/logo.svg"
+          class="q-ml-md"
+          style="width: 30px; height: 30px"
+        />
+        <q-toolbar-title>{{ productName }}</q-toolbar-title>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header> Essential Links </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      :mini="true"
+      @mouseover="miniState = false"
+      @mouseout="miniState = true"
+      :width="200"
+      :breakpoint="500"
+      bordered
+      class="bg-grey-2"
+    >
+      <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
+        <q-list padding>
+          <div v-for="menu in menuList" :key="menu.label">
+            <q-item clickable v-ripple :to="menu.to">
+              <q-item-section avatar>
+                <q-icon :name="menu.icon" />
+              </q-item-section>
+              <q-item-section>{{ menu.label }}</q-item-section>
+              <q-tooltip
+                anchor="center right"
+                self="center left"
+                class="text-body2"
+                transition-duration="0"
+                :offset="[10, 10]"
+                >{{ menu.label }}
+              </q-tooltip>
+            </q-item>
+          </div>
+        </q-list>
+      </q-scroll-area>
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <q-page>
+        <header-layout />
+        <router-view />
+      </q-page>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
 import { defineComponent, ref } from "vue";
-import EssentialLink from "components/EssentialLink.vue";
-
-const linksList = [
-  {
-    title: "Docs",
-    caption: "quasar.dev",
-    icon: "school",
-    link: "https://quasar.dev",
-  },
-  {
-    title: "Github",
-    caption: "github.com/quasarframework",
-    icon: "code",
-    link: "https://github.com/quasarframework",
-  },
-  {
-    title: "Discord Chat Channel",
-    caption: "chat.quasar.dev",
-    icon: "chat",
-    link: "https://chat.quasar.dev",
-  },
-  {
-    title: "Forum",
-    caption: "forum.quasar.dev",
-    icon: "record_voice_over",
-    link: "https://forum.quasar.dev",
-  },
-  {
-    title: "Twitter",
-    caption: "@quasarframework",
-    icon: "rss_feed",
-    link: "https://twitter.quasar.dev",
-  },
-  {
-    title: "Facebook",
-    caption: "@QuasarFramework",
-    icon: "public",
-    link: "https://facebook.quasar.dev",
-  },
-  {
-    title: "Quasar Awesome",
-    caption: "Community Quasar projects",
-    icon: "favorite",
-    link: "https://awesome.quasar.dev",
-  },
-];
+import packageInfo from "../../package.json";
+import HeaderLayout from "./HeaderLayout.vue";
 
 export default defineComponent({
   name: "MainLayout",
 
   components: {
-    EssentialLink,
+    HeaderLayout,
   },
 
   setup() {
     const leftDrawerOpen = ref(false);
+    const miniState = ref(true);
+    const menuList = ref([
+      {
+        label: "ホーム",
+        icon: "home",
+        to: "/admin/home",
+      },
+    ]);
+    const productName = ref(packageInfo.productName);
 
     return {
-      essentialLinks: linksList,
       leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
+      miniState,
+      menuList,
+      productName,
     };
   },
 });

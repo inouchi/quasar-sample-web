@@ -93,7 +93,7 @@ export default defineComponent({
       // TODO:ログイン用のAPIを呼び出す
       await new Promise((resolve) => setTimeout(resolve, 2000));
       $q.loading.hide();
-      // router.push("/admin/home");
+      router.push("/admin/home");
     };
 
     return {
