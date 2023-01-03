@@ -26,6 +26,10 @@ const routes = [
         component: () => import("pages/admin/HomePage.vue"),
       },
       {
+        path: "register-task",
+        component: () => import("pages/admin/RegisterTask.vue"),
+      },
+      {
         path: "change-password",
         component: () => import("pages/admin/ChangePassword.vue"),
       },

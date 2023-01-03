@@ -186,6 +186,11 @@ export default defineComponent({
         to: "/admin/home",
       },
       {
+        label: "タスク登録",
+        icon: "post_add",
+        to: "/admin/register-task",
+      },
+      {
         label: "パスワード変更",
         icon: "settings",
         to: "/admin/change-password",

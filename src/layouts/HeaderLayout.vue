@@ -27,6 +27,11 @@ export default defineComponent({
         path: "/admin/home",
       },
       {
+        label: "タスク登録",
+        icon: "post_add",
+        path: "/admin/register-task",
+      },
+      {
         label: "パスワード変更",
         icon: "settings",
         path: "/admin/change-password",
