@@ -26,6 +26,11 @@ export default defineComponent({
         icon: "home",
         path: "/admin/home",
       },
+      {
+        label: "パスワード変更",
+        icon: "settings",
+        path: "/admin/change-password",
+      },
     ];
 
     watch(currentRoute, (to, _) => {

@@ -185,6 +185,11 @@ export default defineComponent({
         icon: "home",
         to: "/admin/home",
       },
+      {
+        label: "パスワード変更",
+        icon: "settings",
+        to: "/admin/change-password",
+      },
     ]);
     const showLogoutDialog = ref(false);
     const showHelpDialog = ref(false);

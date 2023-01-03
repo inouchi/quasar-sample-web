@@ -25,6 +25,10 @@ const routes = [
         path: "home",
         component: () => import("pages/admin/HomePage.vue"),
       },
+      {
+        path: "change-password",
+        component: () => import("pages/admin/ChangePassword.vue"),
+      },
     ],
   },
 
