@@ -63,7 +63,7 @@
       </q-card-section>
 
       <q-card-section class="text-center q-pa-none">
-        <router-link to="" class="text-grey"
+        <router-link to="/reset-password" class="text-grey"
           >パスワードを忘れた場合はこちらをクリック</router-link
         >
       </q-card-section>
