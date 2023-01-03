@@ -191,6 +191,11 @@ export default defineComponent({
         to: "/admin/register-task",
       },
       {
+        label: "タスク一覧",
+        icon: "list_alt",
+        to: "/admin/tasks",
+      },
+      {
         label: "パスワード変更",
         icon: "settings",
         to: "/admin/change-password",

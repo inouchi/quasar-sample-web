@@ -32,6 +32,11 @@ export default defineComponent({
         path: "/admin/register-task",
       },
       {
+        label: "タスク一覧",
+        icon: "list_alt",
+        path: "/admin/tasks",
+      },
+      {
         label: "パスワード変更",
         icon: "settings",
         path: "/admin/change-password",

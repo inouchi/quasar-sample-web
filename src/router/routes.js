@@ -30,6 +30,10 @@ const routes = [
         component: () => import("pages/admin/RegisterTask.vue"),
       },
       {
+        path: "tasks",
+        component: () => import("pages/admin/TaskList.vue"),
+      },
+      {
         path: "change-password",
         component: () => import("pages/admin/ChangePassword.vue"),
       },
