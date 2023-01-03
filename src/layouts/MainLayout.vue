@@ -48,9 +48,57 @@
               </q-tooltip>
             </q-item>
           </div>
+
+          <q-item clickable v-ripple @click="showLogoutDialog = true">
+            <q-item-section avatar>
+              <q-icon name="logout" />
+            </q-item-section>
+            <q-item-section>ログアウト</q-item-section>
+            <q-tooltip
+              anchor="center right"
+              self="center left"
+              class="text-body2"
+              transition-duration="0"
+              :offset="[10, 10]"
+              >ログアウト
+            </q-tooltip>
+          </q-item>
         </q-list>
       </q-scroll-area>
     </q-drawer>
+
+    <q-dialog v-model="showLogoutDialog">
+      <q-card style="width: 400px">
+        <q-toolbar class="bg-blue-9">
+          <q-icon name="logout" size="sm" color="white" />
+          <q-toolbar-title class="text-white">ログアウト</q-toolbar-title>
+          <q-space />
+          <q-btn icon="close" color="white" flat round dense v-close-popup />
+        </q-toolbar>
+        <q-card-section class="text-center text-subtitle1 q-pt-lg">
+          ログアウトしますか？
+        </q-card-section>
+        <q-card-actions vertical class="q-px-lg">
+          <q-btn
+            unelevated
+            rounded
+            label="OK"
+            color="primary"
+            class="q-mb-md"
+            @click="logout"
+          />
+          <q-btn
+            outline
+            unelevated
+            rounded
+            label="キャンセル"
+            color="primary"
+            v-close-popup
+            class="q-my-md"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 
     <q-page-container>
       <q-page>
@@ -63,6 +111,8 @@
 
 <script>
 import { defineComponent, ref } from "vue";
+import { useQuasar, QSpinnerIos } from "quasar";
+import { useRouter } from "vue-router";
 import packageInfo from "../../package.json";
 import HeaderLayout from "./HeaderLayout.vue";
 
@@ -83,13 +133,26 @@ export default defineComponent({
         to: "/admin/home",
       },
     ]);
+    const showLogoutDialog = ref(false);
     const productName = ref(packageInfo.productName);
+    const $q = useQuasar();
+    const router = useRouter();
+
+    const logout = async () => {
+      $q.loading.show({ spinner: QSpinnerIos });
+      // TODO:ログアウト用のAPIを呼び出す
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      $q.loading.hide();
+      router.push("/");
+    };
 
     return {
       leftDrawerOpen,
       miniState,
       menuList,
+      showLogoutDialog,
       productName,
+      logout,
     };
   },
 });
