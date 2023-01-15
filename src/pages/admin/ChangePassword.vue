@@ -1,6 +1,6 @@
 <template>
   <div align="center">
-    <div class="q-pt-xl" style="width: 500px; max-width: 70%">
+    <div class="q-pt-xl" style="max-width: 500px; width: 85vw">
       <div class="text-subtitle1" style="text-align: left">
         現在のパスワード<span> (*)</span>
       </div>
