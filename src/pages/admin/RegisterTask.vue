@@ -1,6 +1,6 @@
 <template>
   <div align="center">
-    <div class="q-pt-md q-px-xl" style="width: 98%">
+    <div class="q-pt-md q-px-lg" style="width: 95%">
       <div class="text-subtitle1 q-pt-md" style="text-align: left">
         タイトル<span> (*)</span>
       </div>

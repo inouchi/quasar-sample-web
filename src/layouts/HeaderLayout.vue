@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pt-lg q-px-xl">
+  <div class="q-pt-lg q-px-lg">
     <div class="row">
       <q-icon :name="selectedHeader.icon" size="md" class="q-pr-sm"></q-icon>
       <div class="text-h6">{{ selectedHeader.label }}</div>

@@ -1,6 +1,6 @@
 <template>
   <div align="center">
-    <div class="q-px-xl" style="width: 98%">
+    <div class="q-pb-lg q-px-lg" style="width: 95%">
       <q-card flat bordered class="q-mt-lg">
         <q-card-section class="q-px-lg q-py-md bg-grey-1">
           <div class="row q-gutter-lg">
