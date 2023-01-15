@@ -2,7 +2,7 @@
   <div>
     <q-layout
       view="hHh Lpr lff"
-      class="bg-blue window-height window-width row justify-center items-center"
+      class="bg-blue row justify-center items-center"
     >
       <q-page-container>
         <router-view />

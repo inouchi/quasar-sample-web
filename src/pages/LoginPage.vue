@@ -1,6 +1,10 @@
 <template>
   <q-page class="flex flex-center">
-    <q-card bordered class="q-pa-lg shadow-2">
+    <q-card
+      bordered
+      class="q-pa-lg shadow-2"
+      style="max-width: 500px; width: 95vw"
+    >
       <q-card-section>
         <q-form class="q-gutter-md">
           <div style="text-align: center">
