@@ -8,20 +8,13 @@
       <q-card-section>
         <q-form class="q-gutter-md">
           <h5 class="text-h5 text-center q-mt-none">パスワードリセット</h5>
-          <q-input
-            square
-            filled
+          <email-input
             v-model="email"
-            type="email"
+            :filled="true"
+            :square="true"
             placeholder="メールアドレス"
-            :rules="emailRules"
-            lazy-rules
-            hide-bottom-space
-          >
-            <template v-slot:prepend>
-              <q-icon name="email" />
-            </template>
-          </q-input>
+            :showMailIcon="true"
+          ></email-input>
 
           <q-card-actions class="q-px-md, q-px-none">
             <q-btn
@@ -85,9 +78,12 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { useQuasar, QSpinnerIos } from "quasar";
+import EmailInput from "../components/EmailInput.vue";
 
 export default defineComponent({
   name: "ResetPassword",
+
+  components: { EmailInput },
 
   setup() {
     const email = ref("");

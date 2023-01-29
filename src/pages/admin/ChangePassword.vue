@@ -4,62 +4,32 @@
       <div class="text-subtitle1" style="text-align: left">
         現在のパスワード<span> (*)</span>
       </div>
-      <q-input
-        outlined
-        dense
+      <password-input
         v-model="nowPassword"
-        :type="showPassword ? 'text' : 'password'"
-        :rules="passwordRules"
-        lazy-rules
-        hide-bottom-space
-      >
-        <template v-slot:append>
-          <q-icon
-            :name="showPassword ? 'visibility_off' : 'visibility'"
-            @click="showPassword = !showPassword"
-          />
-        </template>
-      </q-input>
+        v-model:showPassword="showPassword"
+        :dense="true"
+        :outlined="true"
+      ></password-input>
 
       <div class="text-subtitle1 q-pt-md" style="text-align: left">
         新しいパスワード<span> (*)</span>
       </div>
-      <q-input
-        outlined
-        dense
+      <password-input
         v-model="newPassword"
-        :type="showPassword ? 'text' : 'password'"
-        :rules="passwordRules"
-        lazy-rules
-        hide-bottom-space
-      >
-        <template v-slot:append>
-          <q-icon
-            :name="showPassword ? 'visibility_off' : 'visibility'"
-            @click="showPassword = !showPassword"
-          />
-        </template>
-      </q-input>
+        v-model:showPassword="showPassword"
+        :dense="true"
+        :outlined="true"
+      ></password-input>
 
       <div class="text-subtitle1 q-pt-md" style="text-align: left">
         新しいパスワード(確認用)<span> (*)</span>
       </div>
-      <q-input
-        outlined
-        dense
+      <password-input
         v-model="newConfirmPassword"
-        :type="showPassword ? 'text' : 'password'"
-        :rules="passwordRules"
-        lazy-rules
-        hide-bottom-space
-      >
-        <template v-slot:append>
-          <q-icon
-            :name="showPassword ? 'visibility_off' : 'visibility'"
-            @click="showPassword = !showPassword"
-          />
-        </template>
-      </q-input>
+        v-model:showPassword="showPassword"
+        :dense="true"
+        :outlined="true"
+      ></password-input>
 
       <q-btn
         rounded
@@ -103,9 +73,12 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { useQuasar, QSpinnerIos } from "quasar";
+import PasswordInput from "../../components/PasswordInput.vue";
 
 export default defineComponent({
   name: "ChangePassword",
+
+  components: { PasswordInput },
 
   setup() {
     const nowPassword = ref("");

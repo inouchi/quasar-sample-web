@@ -15,41 +15,22 @@
             />
             <div class="text-h6 text-grey-7">{{ productName }}</div>
           </div>
-          <q-input
-            square
-            filled
+          <email-input
             v-model="email"
-            type="email"
+            :filled="true"
+            :square="true"
             placeholder="メールアドレス"
-            :rules="emailRules"
-            lazy-rules
-            hide-bottom-space
-          >
-            <template v-slot:prepend>
-              <q-icon name="email" />
-            </template>
-          </q-input>
+            :showMailIcon="true"
+          ></email-input>
 
-          <q-input
-            square
-            filled
+          <password-input
             v-model="password"
-            :type="showPassword ? 'text' : 'password'"
+            v-model:showPassword="showPassword"
+            :filled="true"
+            :square="true"
             placeholder="パスワード"
-            :rules="passwordRules"
-            lazy-rules
-            hide-bottom-space
-          >
-            <template v-slot:prepend>
-              <q-icon name="lock" />
-            </template>
-            <template v-slot:append>
-              <q-icon
-                :name="showPassword ? 'visibility_off' : 'visibility'"
-                @click="showPassword = !showPassword"
-              />
-            </template>
-          </q-input>
+            :showPasswordIcon="true"
+          ></password-input>
 
           <q-card-actions class="q-px-md, q-px-none">
             <q-btn
@@ -79,10 +60,14 @@
 import { defineComponent, ref } from "vue";
 import { useQuasar, QSpinnerIos } from "quasar";
 import { useRouter } from "vue-router";
+import EmailInput from "../components/EmailInput.vue";
+import PasswordInput from "../components/PasswordInput.vue";
 import packageInfo from "../../package.json";
 
 export default defineComponent({
   name: "LoginPage",
+
+  components: { EmailInput, PasswordInput },
 
   setup() {
     const email = ref("");
@@ -105,16 +90,6 @@ export default defineComponent({
       password,
       showPassword,
       productName,
-      emailRules: [
-        (val) =>
-          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(val) ||
-          "メールアドレス形式で入力してください。",
-      ],
-      passwordRules: [
-        (val) =>
-          /^(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,15}$/i.test(val) ||
-          "半角英数文字8～15文字の範囲で入力してください。",
-      ],
       login,
     };
   },
