@@ -1,10 +1,15 @@
 <template>
   <q-layout view="hHh Lpr lff">
     <q-header>
-      <q-toolbar>
+      <q-toolbar
+        :class="
+          isMobile() ? 'text-white bg-primary' : 'text-black bg-blue-grey-1'
+        "
+      >
         <q-btn
+          v-if="isMobile()"
           flat
-          @click="leftDrawerOpen = !leftDrawerOpen"
+          @click="leftDrawerOpen = true"
           round
           dense
           icon="menu"
@@ -12,33 +17,72 @@
         <img
           alt="Quasar Logo"
           src="https://cdn.quasar.dev/logo-v2/svg/logo.svg"
-          class="q-ml-md"
+          :class="isMobile() ? 'q-ml-sm' : ''"
           style="width: 30px; height: 30px"
         />
         <q-toolbar-title>{{ productName }}</q-toolbar-title>
       </q-toolbar>
+      <q-separator class="bg-blue-grey-2" size="2px" />
     </q-header>
 
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
-      :mini="true"
-      @mouseover="miniState = false"
-      @mouseout="miniState = true"
+      :mini="miniState"
       :width="200"
-      :breakpoint="500"
-      bordered
-      class="bg-grey-2"
+      :breakpoint="leftDrawerBreakpoint"
+      class="bg-primary"
     >
       <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
-        <q-list padding>
-          <div v-for="menu in menuList" :key="menu.label">
-            <q-item clickable v-ripple :to="menu.to">
+        <q-list>
+          <q-item
+            clickable
+            @click="
+              leftDrawerOpen = isMobile() ? !leftDrawerOpen : true;
+              updateMiniState();
+              updateLeftDrawerOpenCloseButtonIcon();
+            "
+            @mouseenter="updateLeftDrawerOpenCloseButtonIcon()"
+            @mouseleave="leftDrawerOpenCloseButtonIcon = 'menu'"
+            class="no-hover"
+          >
+            <q-item-section></q-item-section>
+            <q-item-section avatar :class="miniState ? '' : 'q-ml-auto'">
+              <q-icon
+                :name="
+                  isMobile() ? 'arrow_back' : leftDrawerOpenCloseButtonIcon
+                "
+                color="white"
+              />
+            </q-item-section>
+          </q-item>
+          <div
+            v-for="menu in menuList"
+            :key="menu.label"
+            class="text-weight-bolder"
+            @click="
+              menuList.forEach((v) => (v.selected = false));
+              menu.selected = true;
+            "
+          >
+            <q-item
+              clickable
+              :to="menu.to"
+              active-class="text-black bg-white"
+              class="text-black no-hover"
+            >
               <q-item-section avatar>
-                <q-icon :name="menu.icon" />
+                <q-icon
+                  :name="menu.icon"
+                  :color="menu.selected ? 'primary' : 'white'"
+                />
               </q-item-section>
-              <q-item-section>{{ menu.label }}</q-item-section>
+              <q-item-section
+                :class="menu.selected ? 'text-primary' : 'text-white'"
+                >{{ menu.label }}</q-item-section
+              >
               <q-tooltip
+                v-if="miniState"
                 anchor="center right"
                 self="center left"
                 class="text-body2"
@@ -49,12 +93,20 @@
             </q-item>
           </div>
 
-          <q-item clickable v-ripple @click="showLogoutDialog = true">
+          <q-item
+            clickable
+            v-ripple
+            @click="showLogoutDialog = true"
+            class="no-hover"
+          >
             <q-item-section avatar>
-              <q-icon name="logout" />
+              <q-icon name="logout" color="white" />
             </q-item-section>
-            <q-item-section>ログアウト</q-item-section>
+            <q-item-section class="text-weight-bolder text-white"
+              >ログアウト</q-item-section
+            >
             <q-tooltip
+              v-if="miniState"
               anchor="center right"
               self="center left"
               class="text-body2"
@@ -64,12 +116,20 @@
             </q-tooltip>
           </q-item>
 
-          <q-item clickable v-ripple @click="showHelpDialog = true">
+          <q-item
+            clickable
+            v-ripple
+            @click="showHelpDialog = true"
+            class="no-hover"
+          >
             <q-item-section avatar>
-              <q-icon name="info" />
+              <q-icon name="info" color="white" />
             </q-item-section>
-            <q-item-section>Web情報</q-item-section>
+            <q-item-section class="text-weight-bolder text-white"
+              >Web情報</q-item-section
+            >
             <q-tooltip
+              v-if="miniState"
               anchor="center right"
               self="center left"
               class="text-body2"
@@ -153,7 +213,7 @@
       </q-card>
     </q-dialog>
 
-    <q-page-container>
+    <q-page-container class="bg-white">
       <q-page>
         <header-layout />
         <router-view />
@@ -163,7 +223,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onBeforeMount } from "vue";
 import { useQuasar, QSpinnerIos } from "quasar";
 import { useRouter } from "vue-router";
 import packageInfo from "../../package.json";
@@ -178,27 +238,33 @@ export default defineComponent({
 
   setup() {
     const leftDrawerOpen = ref(false);
+    const leftDrawerBreakpoint = ref(500);
+    const leftDrawerOpenCloseButtonIcon = ref("menu");
     const miniState = ref(true);
     const menuList = ref([
       {
         label: "ホーム",
         icon: "home",
         to: "/admin/home",
+        selected: false,
       },
       {
         label: "タスク登録",
         icon: "post_add",
         to: "/admin/register-task",
+        selected: false,
       },
       {
         label: "タスク一覧",
         icon: "list_alt",
         to: "/admin/tasks",
+        selected: false,
       },
       {
         label: "パスワード変更",
         icon: "settings",
         to: "/admin/change-password",
+        selected: false,
       },
     ]);
     const showLogoutDialog = ref(false);
@@ -208,6 +274,27 @@ export default defineComponent({
     const author = ref(packageInfo.author);
     const $q = useQuasar();
     const router = useRouter();
+    const { currentRoute } = router;
+
+    onBeforeMount(() => {
+      menuList.value.forEach((v) => {
+        v.selected = v.to === currentRoute.value.path;
+      });
+    });
+
+    const updateMiniState = () => {
+      miniState.value = !miniState.value && !isMobile();
+    };
+
+    const updateLeftDrawerOpenCloseButtonIcon = () => {
+      leftDrawerOpenCloseButtonIcon.value = miniState.value
+        ? "arrow_forward"
+        : "arrow_back";
+    };
+
+    const isMobile = () => {
+      return window.innerWidth <= leftDrawerBreakpoint.value;
+    };
 
     const getYear = () => {
       return new Date().getFullYear();
@@ -223,6 +310,8 @@ export default defineComponent({
 
     return {
       leftDrawerOpen,
+      leftDrawerBreakpoint,
+      leftDrawerOpenCloseButtonIcon,
       miniState,
       menuList,
       showLogoutDialog,
@@ -230,9 +319,18 @@ export default defineComponent({
       productName,
       version,
       author,
+      updateMiniState,
+      updateLeftDrawerOpenCloseButtonIcon,
+      isMobile,
       getYear,
       logout,
     };
   },
 });
 </script>
+
+<style lang="scss">
+.no-hover .q-focus-helper {
+  display: none;
+}
+</style>
