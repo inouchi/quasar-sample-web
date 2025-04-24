@@ -1,6 +1,7 @@
-# quasar-sample-web (quasar-sample-web)
+# quasar-sample-web
 
-A Quasar Project
+A Quasar Project.  
+See https://quasar-sample-web.pages.dev for the live version.
 
 ## Install the dependencies
 ```bash
